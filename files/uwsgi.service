@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI service
+After=network.target
+Requires=network.target
+
+[Service]
+User=www-data
+Group=www-data
+RuntimeDirectory=uwsgi
+ExecStart=/opt/uwsgi/bin/uwsgi --emperor /opt/uwsgi/etc
+
+[Install]
+WantedBy=multi-user.target

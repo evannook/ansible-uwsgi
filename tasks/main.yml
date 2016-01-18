@@ -1,0 +1,20 @@
+---
+- name: install compiling tools
+  apt: "pkg=build-essential state=latest update_cache=yes"
+- name: check if virtualenv exists
+  stat: "path=/opt/uwsgi"
+  register: uwsgi_dir
+- name: create uwsgi virtualenv
+  shell: "virtualenv -p python3 /opt/uwsgi"
+  when: "not uwsgi_dir.stat.exists"
+- name: install uwsgi
+  shell: "/opt/uwsgi/bin/pip install uwsgi=={{ uwsgi_version }}"
+- name: setup uwsgi systemd service file
+  copy:
+    src: "uwsgi.service"
+    dest: "/etc/systemd/system/uwsgi.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+- name: enable uwsgi service at startup
+  service: "name=uwsgi.service enabled=yes"
