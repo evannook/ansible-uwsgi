@@ -1,6 +1,6 @@
 ---
 - name: install compiling tools
-  apt: "pkg=build-essential state=latest update_cache=yes"
+  apt: "pkg=build-essential state=latest"
 - name: check if virtualenv exists
   stat: "path=/opt/uwsgi"
   register: uwsgi_dir
