@@ -10,6 +10,11 @@ Role Variables
 uwsgi_version: UWSGI_VERSION
 ```
 
+Dependencies
+------------
+
+- evannook.python
+
 Example Playbook
 ----------------
 
