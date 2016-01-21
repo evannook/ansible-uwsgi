@@ -1,6 +1,9 @@
 ---
 - name: install compiling tools
-  apt: "pkg=build-essential state=latest"
+  apt: "pkg={{ item }} state=latest"
+  with_items:
+    - build-essential
+    - libpcre3-dev
 - name: check if virtualenv exists
   stat: "path=/opt/uwsgi"
   register: uwsgi_dir
