@@ -12,6 +12,8 @@
   when: "not uwsgi_dir.stat.exists"
 - name: install uwsgi
   shell: "/opt/uwsgi/bin/pip install uwsgi=={{ uwsgi_version }}"
+- name: create uwsgi config dir
+  file: "path=/opt/uwsgi/etc owner=root group=root mode=0755 state=directory"
 - name: setup uwsgi systemd service file
   copy:
     src: "uwsgi.service"
