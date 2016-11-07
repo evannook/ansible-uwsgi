@@ -1,25 +1,28 @@
 ---
-- name: install compiling tools
-  apt: "pkg={{ item }} state=latest"
-  with_items:
-    - build-essential
-    - libpcre3-dev
-- name: check if virtualenv exists
-  stat: "path=/opt/uwsgi"
-  register: uwsgi_dir
-- name: create uwsgi virtualenv
-  shell: "virtualenv -p python3 /opt/uwsgi"
-  when: "not uwsgi_dir.stat.exists"
-- name: install uwsgi
-  shell: "/opt/uwsgi/bin/pip install uwsgi=={{ uwsgi_version }}"
-- name: create uwsgi config dir
-  file: "path=/opt/uwsgi/etc owner=root group=root mode=0755 state=directory"
-- name: setup uwsgi systemd service file
-  copy:
-    src: "uwsgi.service"
-    dest: "/etc/systemd/system/uwsgi.service"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-- name: enable uwsgi service at startup
-  service: "name=uwsgi.service enabled=yes"
+- block:
+  - name: install compiling tools
+    apt: "pkg={{ item }} state=latest"
+    with_items:
+      - build-essential
+      - libpcre3-dev
+  - name: check if virtualenv exists
+    stat: "path=/opt/uwsgi"
+    register: uwsgi_dir
+  - name: create uwsgi virtualenv
+    shell: "virtualenv -p python3 /opt/uwsgi"
+    when: "not uwsgi_dir.stat.exists"
+  - name: install uwsgi
+    shell: "/opt/uwsgi/bin/pip install uwsgi=={{ uwsgi_version }}"
+  - name: create uwsgi config dir
+    file: "path=/opt/uwsgi/etc owner=root group=root mode=0755 state=directory"
+  - name: setup uwsgi systemd service file
+    copy:
+      src: "uwsgi.service"
+      dest: "/etc/systemd/system/uwsgi.service"
+      owner: "root"
+      group: "root"
+      mode: "0644"
+  - name: enable uwsgi service at startup
+    service: "name=uwsgi.service enabled=yes"
+  tags:
+    - uwsgi
