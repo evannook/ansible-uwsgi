@@ -9,7 +9,7 @@
     stat: "path=/opt/uwsgi"
     register: uwsgi_dir
   - name: create uwsgi virtualenv
-    shell: "virtualenv -p python3 /opt/uwsgi"
+    shell: "python3 -m venv /opt/uwsgi"
     when: "not uwsgi_dir.stat.exists"
   - name: install uwsgi
     shell: "/opt/uwsgi/bin/pip install uwsgi=={{ uwsgi_version }}"

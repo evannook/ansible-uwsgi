@@ -13,7 +13,7 @@ uwsgi_version: UWSGI_VERSION
 Dependencies
 ------------
 
-- evannook.python
+- pylabs.python3
 
 Example Playbook
 ----------------
@@ -21,7 +21,7 @@ Example Playbook
 ```yaml
 - hosts: servers
   roles:
-     - role: evannook.uwsgi
+     - role: pylabs.uwsgi
        uwsgi_version: UWSGI_VERSION
 ```
 
@@ -33,4 +33,4 @@ MIT
 Author Information
 ------------------
 
-Evan Nook
+William Wu
