@@ -22,7 +22,8 @@ Example Playbook
 - hosts: servers
   roles:
      - role: pylabs.uwsgi
-       uwsgi_version: UWSGI_VERSION
+  vars:
+    uwsgi_version: UWSGI_VERSION
 ```
 
 License
