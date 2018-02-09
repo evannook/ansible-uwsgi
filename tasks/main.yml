@@ -11,6 +11,8 @@
   - name: create uwsgi virtualenv
     shell: "python3 -m venv /opt/uwsgi"
     when: "not uwsgi_dir.stat.exists"
+  - name: install wheel
+    shell: "/opt/uwsgi/bin/pip install wheel"
   - name: install uwsgi
     shell: "/opt/uwsgi/bin/pip install uwsgi=={{ uwsgi_version }}"
   - name: create uwsgi config dir
