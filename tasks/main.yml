@@ -1,8 +1,9 @@
 ---
 - block:
   - name: install compiling tools
-    apt: "pkg={{ item }} state=latest"
-    with_items:
+    apt: "pkg={{ packages }} state=latest"
+    vars:
+      packages:
       - build-essential
       - libpcre3-dev
   - name: check if virtualenv exists
