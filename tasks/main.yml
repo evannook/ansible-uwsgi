@@ -4,7 +4,6 @@
     apt: "pkg={{ packages }} state=latest"
     vars:
       packages:
-      - build-essential
       - libpcre3-dev
   - name: check if virtualenv exists
     stat: "path=/opt/uwsgi"
