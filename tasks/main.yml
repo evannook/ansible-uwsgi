@@ -5,16 +5,16 @@
     vars:
       packages:
       - libpcre3-dev
-  - name: check if virtualenv exists
-    stat: "path=/opt/uwsgi"
-    register: uwsgi_dir
   - name: create uwsgi virtualenv
     shell: "python3 -m venv /opt/uwsgi"
-    when: "not uwsgi_dir.stat.exists"
+    args:
+      creates: "/opt/uwsgi"
   - name: install wheel
     shell: "/opt/uwsgi/bin/pip install wheel"
+  # XXX: uwsgi 2.0.18 has bug, so use forking version instead.
+  #      See https://github.com/unbit/uwsgi/issues/1978
   - name: install uwsgi
-    shell: "/opt/uwsgi/bin/pip install uwsgi=={{ uwsgi_version }}"
+    shell: "/opt/uwsgi/bin/pip install git+https://github.com/onsigntv/uwsgi.git@2.0.18-forking-fix"
   - name: create uwsgi config dir
     file: "path=/opt/uwsgi/etc owner=root group=root mode=0755 state=directory"
   - name: setup uwsgi systemd service file
