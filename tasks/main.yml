@@ -4,6 +4,7 @@
     apt: "pkg={{ packages }} state=latest"
     vars:
       packages:
+      - git
       - libpcre3-dev
   - name: create uwsgi virtualenv
     shell: "python3 -m venv /opt/uwsgi"
