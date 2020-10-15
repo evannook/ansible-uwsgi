@@ -23,7 +23,7 @@ Example Playbook
   roles:
      - role: pylabs.uwsgi
   vars:
-    uwsgi_version: UWSGI_VERSION
+    uwsgi_version: "2.0.19.1"
 ```
 
 License
