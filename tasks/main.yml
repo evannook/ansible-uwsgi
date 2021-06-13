@@ -1,26 +1,26 @@
 ---
 - block:
   - name: install compiling tools
-    apt: "pkg=libpcre3-dev state=latest"
+    ansible.builtin.apt: "pkg=libpcre3-dev state=latest"
   - name: create uwsgi virtualenv
-    shell: "python3 -m venv /opt/uwsgi"
+    ansible.builtin.shell: "python3 -m venv /opt/uwsgi"
     args:
       creates: "/opt/uwsgi"
   - name: install wheel
-    shell: "/opt/uwsgi/bin/pip install wheel"
+    ansible.builtin.shell: "/opt/uwsgi/bin/pip install wheel"
   - name: install uwsgi
-    shell: "/opt/uwsgi/bin/pip install uwsgi=={{ uwsgi_version }}"
+    ansible.builtin.shell: "/opt/uwsgi/bin/pip install uwsgi=={{ uwsgi_version }}"
   - name: create uwsgi config dir
-    file: "path=/opt/uwsgi/etc owner=root group=root mode=0755 state=directory"
+    ansible.builtin.file: "path=/opt/uwsgi/etc owner=root group=root mode=0755 state=directory"
   - name: setup uwsgi systemd service file
-    copy:
+    ansible.builtin.copy:
       src: "uwsgi.service"
       dest: "/etc/systemd/system/uwsgi.service"
       owner: "root"
       group: "root"
       mode: "0644"
   - name: enable uwsgi service at startup
-    systemd:
+    ansible.builtin.systemd:
       name: "uwsgi.service"
       enabled: yes
       daemon_reload: yes
