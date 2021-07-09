@@ -4,10 +4,15 @@ After=network.target
 Requires=network.target
 
 [Service]
+Type=notify
 User=www-data
 Group=www-data
 RuntimeDirectory=uwsgi
 ExecStart=/opt/uwsgi/bin/uwsgi --emperor /opt/uwsgi/etc
+Restart=always
+KillSignal=SIGQUIT
+StandardError=syslog
+NotifyAccess=all
 
 [Install]
 WantedBy=multi-user.target
